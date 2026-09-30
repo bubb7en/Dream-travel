@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>行夢之旅｜旅途導引</title>
+<style>
+:root{--bg:#ece8f1;--panel:#f8f5fb;--ink:#2a1a3d;--mute:#64547a;--sea:#5b2a86;--brass:#8a6410;--line:#cfc3dd;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1027;--panel:#26183a;--ink:#ece3f5;--mute:#b3a2c8;--sea:#b08ae0;--brass:#e2b44a;--line:#3f2c5c}}
+:root[data-theme="dark"]{--bg:#1a1027;--panel:#26183a;--ink:#ece3f5;--mute:#b3a2c8;--sea:#b08ae0;--brass:#e2b44a;--line:#3f2c5c}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.85 "Noto Sans TC",system-ui,sans-serif}
+h1,h2,h3{font-family:"Noto Serif TC",serif;line-height:1.35;margin:0}
+a{color:var(--sea)}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+#tide{position:fixed;left:0;bottom:0;width:6px;height:0;background:var(--sea);z-index:5;transition:height .2s}
+.wrap{max-width:720px;margin:0 auto;padding:0 22px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:4}
+nav .wrap{display:flex;gap:18px;overflow-x:auto;padding-top:10px;padding-bottom:10px;white-space:nowrap;font-size:15px}
+nav a{text-decoration:none;color:var(--mute)}
+nav a:hover{color:var(--brass)}
+header{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;gap:28px;align-items:flex-start}
+h1{writing-mode:vertical-rl;font-size:clamp(56px,16vw,96px);font-weight:900;letter-spacing:.12em;color:var(--sea);flex:none}
+.lead{padding-top:8px}
+.lead p{margin:0 0 14px}
+.lead .big{font-family:"Noto Serif TC",serif;font-size:22px;line-height:1.7}
+.tag{color:var(--mute);font-size:15px}
+section{padding:56px 0 8px}
+h2{font-size:28px;margin-bottom:8px;color:var(--brass)}
+.sub{color:var(--mute);margin:0 0 22px}
+.facts{display:grid;gap:12px}
+.facts div{background:var(--panel);border-left:4px solid var(--sea);padding:12px 16px;border-radius:0 6px 6px 0}
+.facts b{font-family:"Noto Serif TC",serif}
+ol.time{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line)}
+ol.time li{position:relative;padding:0 0 20px 18px}
+ol.time li::before{content:"";position:absolute;left:-26px;top:11px;width:12px;height:12px;border-radius:50%;background:var(--brass)}
+ol.time b{font-family:"Noto Serif TC",serif;color:var(--sea)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{font:inherit;font-size:15px;padding:8px 14px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:20px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--sea);border-color:var(--sea);color:var(--bg)}
+.card{background:var(--panel);padding:20px;border-radius:8px;min-height:220px}
+.card h3{font-size:22px;margin-bottom:4px}
+.card .meta{color:var(--mute);font-size:15px;margin:0 0 10px}
+.card dl{margin:12px 0 0}.card dt{font-weight:500;color:var(--brass)}.card dd{margin:0 0 8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin-bottom:10px;padding:2px 16px}
+summary{cursor:pointer;padding:12px 0;font-family:"Noto Serif TC",serif;font-weight:600;font-size:18px}
+details p{margin:0 0 14px}
+.map{background:var(--panel);border-radius:8px;padding:8px;margin-bottom:14px}
+.map svg{width:100%;height:auto;display:block}
+.map text{fill:var(--ink);font:14px "Noto Sans TC",sans-serif}
+.rules{padding-left:22px}.rules li{margin-bottom:10px}
+footer{padding:48px 0 64px;color:var(--mute);font-size:15px}
+#theme{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:6;font:inherit;font-size:14px;padding:8px 12px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.cta{display:inline-block;margin-top:6px;padding:10px 18px;background:var(--brass);color:var(--bg);border-radius:24px;text-decoration:none;font-weight:500}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;display:grid;gap:18px}
+.sheet label,.sheet legend{display:block;font-family:"Noto Serif TC",serif;font-weight:600}
+.sheet small{display:block;font:14px/1.5 "Noto Sans TC",sans-serif;color:var(--mute);margin-top:2px}
+.sheet input,.sheet select,.sheet textarea{display:block;width:100%;margin-top:6px;padding:10px 12px;font:16px "Noto Sans TC",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px}
+.sheet textarea{min-height:110px;resize:vertical}
+.sheet fieldset{border:1px solid var(--line);border-radius:6px;margin:0;padding:12px 14px}
+.stat{display:flex;align-items:center;gap:10px;padding:6px 0}
+.stat span.n{flex:1;font-family:"Noto Sans TC",sans-serif;font-weight:400}
+.stat span.n em{display:block;font-style:normal;font-size:14px;color:var(--mute)}
+.stat button,.btns button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px}
+.stat button{width:40px;height:40px;font-size:20px}
+.stat button:disabled{opacity:.35;cursor:default}
+.stat output{width:24px;text-align:center;font-weight:600}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btns button{padding:10px 18px}
+.btns .go{background:var(--sea);border-color:var(--sea);color:var(--bg)}
+#msg{margin:0;color:var(--sea);min-height:1.5em}
+#out{min-height:180px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}#tide{transition:none}}
+</style>
+</head>
+<body>
+<div id="tide" aria-hidden="true"></div>
+<button id="theme" type="button">切換明暗</button>
+
+<header>
+<div class="wrap">
+<h1>行夢之旅</h1>
+<div class="lead">
+<p class="big">### 沉睡者蛻變成完全清醒者的必經過程，需要戰勝位於夜世界的另一個自己，也就是夢影，並吸收其膜力後才算完成。在這之後，經過成長與歷練的清醒者會變得更加強大，也就能進入清醒化狀態。</p>
+<a class="cta" href="#sheet">直接填寫角色卡</a>
+</div>
+</div>
+</header>
+
+<nav aria-label="認識行夢之旅"><div class="wrap">
+<a href="#quick">膜核與膜力</a><a href="#history">情醒化</a><a href="#factions">人種</a><a href="#places"世界</a><a href="#roles">地區</a><a href="#newbie">祝福</a><a href="#sheet">展開行夢之旅</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="quick">
+<h2>膜核與膜力</h2>
+<div><b>膜核。</b>從情緒中出現的一種類似於精神力的東西，彷彿一層膜一樣包裹住了肉體與靈魂。從膜力的狀況中可以看出擁有者當前的情緒，隨著心境變化，膜力的包覆形狀與質感可能有所不同。</div>
+<div><b>膜力。</b>專屬於膜力的心臟，基本上所有人都有，但在沒有意識到膜力存在的情況下，普通人無法察覺並使用。
+平時以能量形式存在於精神中，必要時可以幻化出形體短暫離開體內。每個人的膜核都是獨特的，且可以展現出持有者當下的膜力和精神狀態。
+因為膜核極其脆弱，損壞後會難以凝聚及操控膜力，但會隨時間慢慢恢復。
+向對方展現出自己的膜核是信任並示好的表現，在戰鬥中釋出膜核可以讓膜力使用得到提升。
+</div>
+</div>
+</section>
+
+<section id="history">
+<h2>世界簡史</h2>
+<p class="sub">依時間順序，從過去讀到現在。</p>
+<ol class="time">
+<li><b>大陸時代</b>：人類建起高塔與長橋，用「潮能」驅動城市。</li>
+<li><b>滿潮之夜</b>：海面在一夜之間上升數百公尺，沒人確定原因。</li>
+<li><b>漂流百年</b>：倖存者在山頂與船上重建生活，形成今天的群島。</li>
+<li><b>燈塔條約</b>：各島簽約，共同維護潮汐表與航道，戰爭暫時停止。</li>
+<li><b>現在</b>：潮汐表開始出錯。有些地方該退潮時卻沒有退。</li>
+</ol>
+</section>
+
+<section id="factions">
+<h2>四大勢力</h2>
+<p class="sub">點選名稱，看看他們想要什麼。</p>
+<div class="tabs" role="tablist" id="ftabs"></div>
+<div class="card" id="fcard" role="tabpanel" aria-live="polite"></div>
+</section>
+
+<section id="places">
+<h2>主要地點</h2>
+<p class="sub">故事大多從這三座島開始。</p>
+<div class="map">
+<svg viewBox="0 0 400 200" role="img" aria-label="群島示意圖：北方燈塔島、東南鹽港、西南沉鐘灣">
+<rect width="400" height="200" fill="none"/>
+<path d="M0 60 Q50 45 100 60 T200 60 T300 60 T400 60" fill="none" stroke="var(--sea)" stroke-opacity=".35" stroke-width="2"/>
+<path d="M0 150 Q50 135 100 150 T200 150 T300 150 T400 150" fill="none" stroke="var(--sea)" stroke-opacity=".35" stroke-width="2"/>
+<ellipse cx="200" cy="40" rx="42" ry="20" fill="var(--brass)" fill-opacity=".35"/><text x="200" y="45" text-anchor="middle">燈塔島</text>
+<ellipse cx="310" cy="130" rx="50" ry="26" fill="var(--sea)" fill-opacity=".35"/><text x="310" y="135" text-anchor="middle">鹽港</text>
+<ellipse cx="90" cy="135" rx="46" ry="24" fill="var(--sea)" fill-opacity=".2" stroke="var(--sea)" stroke-dasharray="4 4"/><text x="90" y="140" text-anchor="middle">沉鐘灣</text>
+</svg>
+</div>
+<details><summary>燈塔島：議會所在地</summary><p>整座島圍著一座會發光的塔建成。這裡發布每日潮汐表，也是任務的接案處。治安好、規矩多，帶武器進城要登記。</p></details>
+<details><summary>鹽港：最熱鬧的市集</summary><p>船隻、商人、走私客都在這裡。想買裝備、找情報、認識同伴，先來這裡。夜裡的碼頭不要單獨行動。</p></details>
+<details><summary>沉鐘灣：退潮才出現的舊城</summary><p>舊世界的城區，只在大退潮時露出水面。街上還有鐘聲，但沒人知道是誰在敲。多數冒險從這裡開始。</p></details>
+</section>
+
+<section id="roles">
+<h2>你可以扮演誰</h2>
+<p class="sub">選一個最想演的，細節可以之後再補。</p>
+<details><summary>拾潮人（探索者）</summary><p>擅長潛入舊城、開鎖、辨認遺物。隊伍裡最常見的角色。</p></details>
+<details><summary>領航員</summary><p>看得懂潮汐表，也懂星象。負責讓隊伍在對的時間進、對的時間出。</p></details>
+<details><summary>機修師</summary><p>能修復舊世界的機械，也能在戰鬥中操作重型裝置。</p></details>
+<details><summary>鹽祭司</summary><p>與深潮溝通的人。能安撫海中的東西，但代價由你自己承擔。</p></details>
+<details><summary>放逐衛兵</summary><p>曾經的議會守衛，因為某件事被除名。擅長保護同伴。</p></details>
+</section>
+
+<section id="newbie">
+<h2>新手指南</h2>
+<p class="sub">不懂術語也沒關係，先看這幾個。</p>
+<details><summary>什麼是跑團？</summary><p>一群人一起說一個故事。一位主持人（GM）描述世界，其他人各自扮演一個角色，說出角色想做什麼。不確定成不成功時，就擲骰子決定。</p></details>
+<details><summary>GM 是誰？</summary><p>遊戲主持人。負責描述場景、扮演路人（NPC）、裁定結果。GM 不是對手，而是幫大家把故事說好的人。</p></details>
+<details><summary>什麼是擲骰與檢定？</summary><p>當你的角色做有風險的事（例如撬開生鏽的門），GM 會請你擲骰。點數加上你的能力，達到目標就成功。失敗通常會讓故事往有趣的方向轉，而不是卡住。</p></details>
+<details><summary>角色卡怎麼填？</summary><p>寫下名字、身分、幾項擅長的事、一個弱點和一個想達成的願望。有這五項就夠開場，其餘可以邊玩邊補。</p></details>
+<details><summary>我不會演戲怎麼辦？</summary><p>不用演。用「我的角色會……」開頭說明想做什麼就好。用第三人稱一樣完全可以。</p></details>
+
+<h3 style="margin:28px 0 10px;font-size:20px">開始前的三個約定</h3>
+<ol class="rules">
+<li><b>先說不想碰的內容。</b>開場前，大家一起列出不想出現的題材，主持人會避開。</li>
+<li><b>隨時可以喊暫停。</b>不舒服、看不懂或需要休息，說一聲就好，不必解釋原因。</li>
+<li><b>問就對了。</b>不確定規則或劇情時，直接問，沒有人會覺得你笨。</li>
+</ol>
+</section>
+
+<section id="sheet">
+<h2>角色卡（白單）</h2>
+<p class="sub">讀完世界觀後，從上往下填。每格下方有提示，內容會自動存在這個瀏覽器，不會上傳。</p>
+<div class="sheet">
+<label>角色名字<input data-f="name" placeholder="例：阿潮" autocomplete="off"><small>取一個容易記的就好。</small></label>
+<label>身分<select data-f="role" id="fRole"></select><small>對應上方「你可以扮演誰」。</small></label>
+<label>出身勢力<select data-f="fac" id="fFac"></select><small>你從哪裡來，會影響 NPC 怎麼看你。</small></label>
+<fieldset><legend>能力</legend><small id="left"></small><div id="stats"></div></fieldset>
+<label>擅長的兩件事<input data-f="skills" placeholder="例：在暗處辨方向、和老人聊天" autocomplete="off"><small>越具體越好用。</small></label>
+<label>弱點<input data-f="weak" placeholder="例：怕深水" autocomplete="off"><small>弱點讓故事有戲，GM 會很感謝你。</small></label>
+<label>願望<input data-f="wish" placeholder="例：找到失蹤的姊姊" autocomplete="off"><small>你的角色最想達成什麼？</small></label>
+<label>隨身三件物品<input data-f="items" placeholder="例：舊懷錶、鹽袋、折疊小刀" autocomplete="off"></label>
+<label>背景故事（選填）<textarea data-f="story" placeholder="寫幾句就好：你在哪裡長大？為什麼開始拾潮？"></textarea></label>
+<div class="btns"><button type="button" class="go" id="mkimg">產生角色卡圖片</button><button type="button" id="copy">複製文字版</button><button type="button" id="clear">清空重填</button></div>
+<p id="msg" role="status"></p>
+<textarea id="out" readonly hidden aria-label="角色卡文字"></textarea>
+<div id="imgbox" hidden>
+<img id="cardimg" alt="完整的角色卡圖片" style="width:100%;height:auto;border-radius:8px;display:block">
+<div class="btns" style="margin-top:12px"><button type="button" class="go" id="dl" hidden>下載圖片</button></div>
+<small>手機也可以長按圖片，選擇儲存到相簿。</small>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer><div class="wrap">這是一份可替換的範例世界觀。要換成你自己的設定，只需修改文字內容。</div></footer>
+
+<script>
+var F=[
+{n:"燈塔議會",m:"維護潮汐表與航道的官方組織",g:"讓所有島保持和平與貿易暢通。",w:"對遺物實行管制，私自拾取會被處罰。",h:"潮汐表出錯的真相，他們可能早就知道。"},
+{n:"鹽行會",m:"控制貿易與港口的商人聯盟",g:"賺錢，並壟斷遺物交易。",w:"出價高，也不問來源，但翻臉很快。",h:"想要一份沒有議會審查的潮汐表。"},
+{n:"深潮教團",m:"崇拜海中意志的信徒",g:"讓大海永遠不再退去。",w:"他們相信滿潮之夜是一種恩典。",h:"你的隊伍裡，也許有人已經受洗。"},
+{n:"自由拾潮人",m:"沒有旗幟的獨立探索者",g:"活下去，順便發點財。",w:"互相分享潮位與陷阱情報。",h:"角色多半從這裡出身，你也是。"}];
+var tabs=document.getElementById("ftabs"),card=document.getElementById("fcard");
+function show(i){
+var f=F[i];
+card.innerHTML="<h3></h3><p class='meta'></p><dl><dt>他們想要</dt><dd></dd><dt>與你的關係</dt><dd></dd><dt>可能的伏筆</dt><dd></dd></dl>";
+card.querySelector("h3").textContent=f.n;
+card.querySelector(".meta").textContent=f.m;
+var d=card.querySelectorAll("dd");d[0].textContent=f.g;d[1].textContent=f.w;d[2].textContent=f.h;
+[].forEach.call(tabs.children,function(b,j){b.setAttribute("aria-selected",j===i)});
+}
+F.forEach(function(f,i){var b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.textContent=f.n;b.onclick=function(){show(i)};tabs.appendChild(b)});
+show(0);
+var tide=document.getElementById("tide");
+function upd(){var h=document.documentElement.scrollHeight-innerHeight;tide.style.height=(h>0?scrollY/h*100:0)+"%"}
+addEventListener("scroll",upd,{passive:true});upd();
+var ROLES=["拾潮人（探索者）","領航員","機修師","鹽祭司","放逐衛兵"];
+var ST=[["體魄","打架、搬重物、游泳"],["手藝","開鎖、修理、製作"],["洞察","觀察、察覺陷阱、判斷潮位"],["交際","說服、談判、打聽消息"]];
+var val={體魄:0,手藝:0,洞察:0,交際:0},KEY="tide-sheet";
+function opts(id,arr){var s=document.getElementById(id);arr.forEach(function(t){var o=document.createElement("option");o.textContent=t;s.appendChild(o)})}
+opts("fRole",ROLES);opts("fFac",F.map(function(f){return f.n}));
+var sEl=document.getElementById("stats"),lEl=document.getElementById("left");
+function pts(){return 6-ST.reduce(function(a,s){return a+val[s[0]]},0)}
+function drawStats(){
+sEl.innerHTML="";
+ST.forEach(function(s){
+var r=document.createElement("div");r.className="stat";
+var n=document.createElement("span");n.className="n";n.textContent=s[0];
+var em=document.createElement("em");em.textContent=s[1];n.appendChild(em);
+var m=document.createElement("button");m.type="button";m.textContent="−";m.setAttribute("aria-label",s[0]+" 減 1");m.disabled=val[s[0]]<=0;
+var o=document.createElement("output");o.textContent=val[s[0]];
+var p=document.createElement("button");p.type="button";p.textContent="+";p.setAttribute("aria-label",s[0]+" 加 1");p.disabled=val[s[0]]>=3||pts()<=0;
+m.onclick=function(){val[s[0]]--;drawStats();save()};
+p.onclick=function(){val[s[0]]++;drawStats();save()};
+r.appendChild(n);r.appendChild(m);r.appendChild(o);r.appendChild(p);sEl.appendChild(r);
+});
+lEl.textContent="共 6 點，每項最多 3。剩餘 "+pts()+" 點。";
+}
+var fields=document.querySelectorAll("[data-f]");
+function collect(){var d={stats:val};[].forEach.call(fields,function(e){d[e.dataset.f]=e.value});return d}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(collect()))}catch(e){}}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||"null");if(!d)return;
+[].forEach.call(fields,function(e){if(d[e.dataset.f]!=null)e.value=d[e.dataset.f]});
+if(d.stats)ST.forEach(function(s){val[s[0]]=Math.min(3,+d.stats[s[0]]||0)});
+}catch(e){}}
+[].forEach.call(fields,function(e){e.addEventListener("input",save)});
+load();drawStats();
+var msg=document.getElementById("msg"),out=document.getElementById("out");
+document.getElementById("copy").onclick=function(){
+var d=collect(),t="【角色卡】\n名字："+(d.name||"（未填）")+"\n身分："+d.role+"\n出身勢力："+d.fac+"\n能力："+ST.map(function(s){return s[0]+" "+val[s[0]]}).join("　")+"\n擅長："+d.skills+"\n弱點："+d.weak+"\n願望："+d.wish+"\n隨身物品："+d.items+"\n背景："+d.story;
+out.value=t;out.hidden=false;
+function ok(){msg.textContent="已複製，可以貼給 GM。"}
+function no(){out.select();msg.textContent="請長按下方文字手動複製。"}
+try{navigator.clipboard.writeText(t).then(ok,no)}catch(e){no()}
+};
+document.getElementById("clear").onclick=function(){
+if(!confirm("確定要清空所有欄位嗎？"))return;
+[].forEach.call(fields,function(e){e.value=e.tagName==="SELECT"?e.options[0].value:""});
+ST.forEach(function(s){val[s[0]]=0});out.hidden=true;msg.textContent="已清空。";drawStats();save();
+};
+var SERIF='"Noto Serif TC","Songti TC","PMingLiU",serif',SANS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
+var GOLD="#e2b44a",lastCanvas=null,dl=null,dlBtn=document.getElementById("dl");
+function wrapT(ctx,text,maxW){var lines=[];text.split("\n").forEach(function(par){var line="";Array.from(par).forEach(function(ch){var t=line+ch;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=ch}else line=t});lines.push(line)});return lines}
+function render(ctx,d){
+var W=1080,P=84,IW=W-2*P,y=130;
+ctx.textBaseline="alphabetic";ctx.textAlign="left";
+ctx.fillStyle=GOLD;ctx.font="600 30px "+SERIF;ctx.fillText("潮汐群島　拾潮人角色卡",P,y);
+y+=120;
+var nm=d.name||"（未命名）",size=104;
+do{size-=4;ctx.font="900 "+size+"px "+SERIF}while(ctx.measureText(nm).width>IW&&size>40);
+ctx.fillStyle="#f3ebfb";ctx.fillText(nm,P,y);
+y+=64;ctx.fillStyle="#b08ae0";ctx.font="500 38px "+SANS;ctx.fillText(d.role+"　／　"+d.fac,P,y);
+y+=44;ctx.fillStyle=GOLD;ctx.fillRect(P,y,IW,3);
+y+=76;
+ST.forEach(function(s,i){
+var cx=P+(i%2)*(IW/2),cy=y+Math.floor(i/2)*92;
+ctx.fillStyle="#ece3f5";ctx.font="500 38px "+SANS;ctx.fillText(s[0],cx,cy);
+for(var k=0;k<3;k++){ctx.beginPath();ctx.arc(cx+190+k*48,cy-12,16,0,7);if(k<val[s[0]]){ctx.fillStyle=GOLD;ctx.fill()}ctx.strokeStyle=GOLD;ctx.lineWidth=3;ctx.stroke()}
+});
+y+=92+64;
+[["擅長",d.skills],["弱點",d.weak],["願望",d.wish],["隨身物品",d.items],["背景故事",d.story]].forEach(function(sec){
+ctx.font="400 32px "+SANS;
+var lines=wrapT(ctx,(sec[1]||"").trim()||"（未填）",IW-64),h=lines.length*50+98;
+ctx.fillStyle="rgba(255,255,255,.07)";ctx.fillRect(P,y,IW,h);
+ctx.fillStyle=GOLD;ctx.fillRect(P,y,6,h);
+ctx.font="600 28px "+SERIF;ctx.fillText(sec[0],P+32,y+56);
+ctx.fillStyle="#ece3f5";ctx.font="400 32px "+SANS;
+lines.forEach(function(l,i){ctx.fillText(l,P+32,y+112+i*50)});
+y+=h+24;
+});
+ctx.fillStyle="#8b78a3";ctx.font="400 24px "+SANS;ctx.fillText("潮汐群島　世界觀導覽",P,y+34);
+return y+34;
+}
+async function makeImage(){
+var d=collect(),txt="潮汐群島拾潮人角色卡體魄手藝洞察交際擅長弱點願望隨身物品背景故事（未填）（未命名）／　"+Object.keys(d).map(function(k){return typeof d[k]==="string"?d[k]:""}).join("");
+try{await Promise.all([document.fonts.load('900 60px "Noto Serif TC"',txt),document.fonts.load('600 30px "Noto Serif TC"',txt),document.fonts.load('400 30px "Noto Sans TC"',txt),document.fonts.load('500 30px "Noto Sans TC"',txt)])}catch(e){}
+var W=1080,c=document.createElement("canvas");c.width=W;c.height=2400;
+var end=render(c.getContext("2d"),d),H=Math.max(1500,end+96);
+c.height=H;var ctx=c.getContext("2d");
+var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#2c1848");g.addColorStop(1,"#150c22");
+ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ctx.strokeStyle=GOLD;ctx.lineWidth=4;ctx.strokeRect(28,28,W-56,H-56);
+ctx.globalAlpha=.5;ctx.lineWidth=1.5;ctx.strokeRect(44,44,W-88,H-88);ctx.globalAlpha=1;
+render(ctx,d);
+lastCanvas=c;
+document.getElementById("cardimg").src=c.toDataURL("image/png");
+document.getElementById("imgbox").hidden=false;
+dlBtn.hidden=!dl;
+document.getElementById("imgbox").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.getElementById("mkimg").onclick=function(){msg.textContent="正在產生圖片…";makeImage().then(function(){msg.textContent="角色卡圖片完成。"},function(){msg.textContent="產生失敗，請再試一次。"})};
+try{if(window.claude&&claude.use)claude.use("downloads").then(function(x){dl=x;if(x&&lastCanvas)dlBtn.hidden=false},function(){})}catch(e){}
+dlBtn.onclick=function(){
+if(!dl||!lastCanvas)return;
+lastCanvas.toBlob(function(b){
+var n=((collect().name||"角色卡")+"").replace(/[\\\/:*?"<>|]/g,"").slice(0,40)||"角色卡";
+dl.save({filename:n+".png",data:b}).then(function(){msg.textContent="已儲存。"},function(e){msg.textContent=(e&&e.code==="declined")?"已取消儲存。":"無法下載，請長按圖片儲存。"});
+},"image/png");
+};
+document.getElementById("theme").onclick=function(){
+var r=document.documentElement,cur=r.getAttribute("data-theme");
+var dark=cur?cur==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+r.setAttribute("data-theme",dark?"light":"dark");
+};
+</script>
+</body>
+</html>
