@@ -33,6 +33,17 @@ h2{font-size:28px;margin-bottom:8px;color:var(--brass)}
 .facts{display:grid;gap:12px}
 .facts div{background:var(--panel);border-left:4px solid var(--sea);padding:12px 16px;border-radius:0 6px 6px 0}
 .facts b{font-family:"Noto Serif TC",serif}
+:root{--panel:#f8f5fb;--sea:#5b2a86;--ink:#2a1a3d;--line:#cfc3dd}
+
+.facts{display:grid;gap:12px}
+.facts div{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-left:4px solid var(--sea);
+  padding:14px 16px;
+  border-radius:8px;
+}
+.facts b{display:block;margin-bottom:2px}
 ol.time{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line)}
 ol.time li{position:relative;padding:0 0 20px 18px}
 ol.time li::before{content:"";position:absolute;left:-26px;top:11px;width:12px;height:12px;border-radius:50%;background:var(--brass)}
