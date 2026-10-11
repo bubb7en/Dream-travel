@@ -10,10 +10,10 @@
 <body data-page="login" class="login">
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gtt"><div class="box">
 <h2 id="gtt" style="font-size:26px">潮汐群島</h2><p class="gp" style="margin-top:0">創作者登入</p>
-<div id="st1"><p class="gp">每次開啟頁面都需要登入。第一次使用的暱稱會得到一組安全碼。</p><input id="nick" maxlength="20" placeholder="創作者暱稱，例：小夏" autocomplete="off" aria-label="創作者暱稱"><button type="button" class="go" id="next">繼續</button><button type="button" class="skip" id="skip">先只看世界觀（不登入）</button></div>
+<div id="st1"><p class="gp">每次開啟頁面都需要登入。第一次使用的暱稱會得到一組安全碼。</p><input id="nick" maxlength="20" placeholder="創作者暱稱，例：小夏" autocomplete="off" aria-label="創作者暱稱"><button type="button" class="go" id="next">繼續</button><a class="skip" id="skip" href="main.html">先只看世界觀（不登入）</a></div>
 <div id="stn" hidden><p class="gp">「<b id="nn"></b>」是新暱稱。這是你的安全碼，只會顯示這一次，遺失無法找回：</p><code id="newcode"></code><button type="button" class="skip" id="cpcode" style="margin:0 0 10px">複製安全碼</button><label class="gp" style="display:block"><input type="checkbox" id="saved">我已抄下安全碼</label><div><button type="button" class="go" id="create">建立並進入</button><button type="button" class="skip" id="back1">返回</button></div></div>
 <div id="sto" hidden><p class="gp">輸入「<b id="on"></b>」的安全碼：</p><input id="codein" placeholder="XXXX-XXXX-XXXX" autocomplete="off" aria-label="安全碼"><button type="button" class="go" id="unlock">進入</button><button type="button" class="skip" id="back2">返回</button></div>
 <p class="err" id="gerr" role="alert"></p></div></div>
-<script src="main.js"></script>
+<script src="main.js" onerror="document.getElementById('gerr').textContent='找不到 main.js：請確認它和 index.html 在同一個資料夾，檔名全小寫。'"></script>
 </body>
 </html>
