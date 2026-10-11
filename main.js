@@ -1,20 +1,3 @@
-/* ===== 潮汐群島：前端（index.html 登入頁 + main.html 主頁共用） =====
-
-   1. 部署 Google Apps Script 為「網頁應用程式」（執行身分：我；存取權：任何人），把 /exec 網址貼到下面 API_URL。
-   2. 所有請求都是 POST，Content-Type 用 text/plain（避免 CORS 預檢），body 為 JSON：{action, ...參數}
-      回應一律為 JSON：{ok:true, ...資料} 或 {ok:false, error:"auth"|"forbidden"|"taken"|"not_found"|...}
-
-   action 清單（code 為去掉符號、轉大寫的安全碼，例如 K7QM4XH29RTD；後端請存「加鹽雜湊」，不要存明碼）
-   - checkNick   {nick}                 -> {ok, exists}
-   - register    {nick, code}           -> {ok}            暱稱已存在回 {ok:false,error:"taken"}
-   - login       {nick, code}           -> {ok}            錯誤回 {ok:false,error:"auth"}
-   - listPublic  {}                     -> {ok, items:[角色]}   公開角色，所有人可讀
-   - listPrivate {nick, code}           -> {ok, items:[角色]}   該創作者的私人角色，需驗證
-   - saveChar    {nick, code, char, public} -> {ok}        依 char.id 新增或覆蓋；char.by 必須等於 nick
-   - setPublic   {nick, code, id, public}   -> {ok}        只有作者能切換
-   - deleteChar  {nick, code, id}       -> {ok}            只有作者能刪除
-   角色欄位：id, n, role, fac, fam, world, by, at, stats{體魄,手藝,洞察,交際}, skills, weak, wish, items, story
-*/
 const API_URL = "https://script.google.com/macros/s/AKfycbzdry7EEPkam7b3ErUXTEC7IQWq7r886KOgaZa6uHnLRA8PXm8uuuLGviJFizj94x6SmA/exec";
 
 async function api(action, data) {
