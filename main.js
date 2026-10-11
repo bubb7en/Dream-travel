@@ -12,7 +12,7 @@ async function api(action, data) {
   return j;
 }
 
-/* ---------- index.html：登入頁邏輯 ---------- */
+/* ---------- index.html：登入頁邏輯（修正重複暱稱問題） ---------- */
 function initLogin() {
   // 如果已經登入過或選了訪客模式，直接跳轉到 main.html
   var auth = sessionStorage.getItem("tide-auth");
@@ -31,7 +31,7 @@ function initLogin() {
     }); 
     return t; 
   }
-  function norm(t) { return String(t).toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+  function norm(t) { return String(t || "").toUpperCase().replace(/[^A-Z0-9]/g, ""); }
   function $(id) { return document.getElementById(id); }
 
   var nickIn = $("nick"), codeIn = $("codein"), pend = null, newCode = "";
@@ -58,8 +58,20 @@ function initLogin() {
     try {
       var j = await api("checkNick", { nick: v });
       pend = v;
-      if (j.exists) { $("on").textContent = v; codeIn.value = ""; show("sto"); codeIn.focus(); }
-      else { newCode = genCode(); $("nn").textContent = v; $("newcode").textContent = newCode; $("saved").checked = false; show("stn"); }
+      // 嚴格判斷：如果後端回傳 exists 為 true，顯示輸入舊安全碼介面 (sto)
+      if (j && j.exists === true) { 
+        $("on").textContent = v; 
+        codeIn.value = ""; 
+        show("sto"); 
+        codeIn.focus(); 
+      } else { 
+        // 否則判定為新暱稱，產生新安全碼 (stn)
+        newCode = genCode(); 
+        $("nn").textContent = v; 
+        $("newcode").textContent = newCode; 
+        $("saved").checked = false; 
+        show("stn"); 
+      }
     } catch (e) { console.error(e); gerr(netErr(e)); }
   };
 
@@ -94,7 +106,6 @@ function initLogin() {
   codeIn.addEventListener("keydown", function (e) { if (e.key === "Enter") $("unlock").click(); });
   nickIn.focus();
 }
-
 /* ---------- main.html：主頁邏輯 ---------- */
 function initMain() {
   var authStr = sessionStorage.getItem("tide-auth");
