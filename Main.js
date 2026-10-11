@@ -54,7 +54,6 @@ function initLogin() {
 /* ---------- main.html：主頁 ---------- */
 function initMain() {
 var auth = null; try { auth = JSON.parse(sessionStorage.getItem("tide-auth") || "null"); } catch (e) {}
-if (!auth && sessionStorage.getItem("tide-guest") !== "1") { location.replace("index.html"); return; }
 var nick = auth ? auth.nick : "";
 
 var F=[
@@ -187,7 +186,7 @@ function say(t){msg.textContent=t}
 function jump(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
 function errMsg(e){var m=e&&e.message;return m==="auth"?"驗證失敗，請重新登入。":m==="forbidden"?"沒有權限執行這個操作。":"操作失敗，請稍後再試。"}
 function logout(){sessionStorage.removeItem("tide-auth");sessionStorage.removeItem("tide-guest");location.href="index.html"}
-function who(){document.getElementById("whoami").textContent=auth?"已登入創作者：「"+nick+"」":"訪客模式，無法儲存角色。"}
+function who(){document.getElementById("whoami").textContent=auth?"已登入創作者：「"+nick+"」":"訪客模式：可以閱讀世界觀，登入後才能儲存角色。";document.getElementById("chg").textContent=auth?"登出／更換暱稱":"登入創作者";var nl=document.getElementById("navlogin");if(nl)nl.textContent=auth?"登出":"登入創作者"}
 function card(c,skip,acts,badge){
 var d=mk("div","gc");d.appendChild(mk("b",null,c.n||"（未命名）"));
 if(badge)d.appendChild(mk("span","me",badge));
