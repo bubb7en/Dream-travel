@@ -1,4 +1,21 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwbn3DEJrDeuuFNtsMz2769GRoWdpICBezZTDCbELe0KdLjQ7I4SW2y35PxT2xOL-x2/exec";
+/* ===== 潮汐群島：前端（index.html 登入頁 + main.html 主頁共用） =====
+
+   1. 部署 Google Apps Script 為「網頁應用程式」（執行身分：我；存取權：任何人），把 /exec 網址貼到下面 API_URL。
+   2. 所有請求都是 POST，Content-Type 用 text/plain（避免 CORS 預檢），body 為 JSON：{action, ...參數}
+      回應一律為 JSON：{ok:true, ...資料} 或 {ok:false, error:"auth"|"forbidden"|"taken"|"not_found"|...}
+
+   action 清單（code 為去掉符號、轉大寫的安全碼，例如 K7QM4XH29RTD；後端請存「加鹽雜湊」，不要存明碼）
+   - checkNick   {nick}                 -> {ok, exists}
+   - register    {nick, code}           -> {ok}            暱稱已存在回 {ok:false,error:"taken"}
+   - login       {nick, code}           -> {ok}            錯誤回 {ok:false,error:"auth"}
+   - listPublic  {}                     -> {ok, items:[角色]}   公開角色，所有人可讀
+   - listPrivate {nick, code}           -> {ok, items:[角色]}   該創作者的私人角色，需驗證
+   - saveChar    {nick, code, char, public} -> {ok}        依 char.id 新增或覆蓋；char.by 必須等於 nick
+   - setPublic   {nick, code, id, public}   -> {ok}        只有作者能切換
+   - deleteChar  {nick, code, id}       -> {ok}            只有作者能刪除
+   角色欄位：id, n, role, fac, fam, world, by, at, stats{體魄,手藝,洞察,交際}, skills, weak, wish, items, story
+*/
+const API_URL = "https://script.google.com/macros/s/AKfycbzdry7EEPkam7b3ErUXTEC7IQWq7r886KOgaZa6uHnLRA8PXm8uuuLGviJFizj94x6SmA/exec";
 
 async function api(action, data) {
   const r = await fetch(API_URL, {
@@ -20,6 +37,11 @@ function initLogin() {
   function norm(t) { return String(t).toUpperCase().replace(/[^A-Z0-9]/g, ""); }
   function $(id) { return document.getElementById(id); }
   var nickIn = $("nick"), codeIn = $("codein"), pend = null, newCode = "";
+  function netErr(e) {
+    if (e && e.name === "TypeError") return "連不到後端（" + e.message + "）：請確認網址正確，且部署的「誰可以存取」是「所有人」。";
+    if (e && e.name === "SyntaxError") return "後端回傳的不是 JSON：多半是部署存取權不是「所有人」，或尚未授權。";
+    return "後端回報錯誤：" + (e && e.message);
+  }
   function gerr(t) { $("gerr").textContent = t; }
   function show(n) { ["st1", "stn", "sto"].forEach(function (i) { $(i).hidden = i !== n; }); gerr(""); }
   function done(nick, code) { sessionStorage.setItem("tide-auth", JSON.stringify({ nick: nick, code: norm(code) })); location.href = "main.html"; }
@@ -32,17 +54,17 @@ function initLogin() {
       pend = v;
       if (j.exists) { $("on").textContent = v; codeIn.value = ""; show("sto"); codeIn.focus(); }
       else { newCode = genCode(); $("nn").textContent = v; $("newcode").textContent = newCode; $("saved").checked = false; show("stn"); }
-    } catch (e) { gerr("無法連線到後端，請確認 main.js 的 API_URL。"); }
+    } catch (e) { console.error(e); gerr(netErr(e)); }
   };
   $("create").onclick = async function () {
     if (!$("saved").checked) { gerr("請先抄下安全碼並勾選。"); return; }
     try { await api("register", { nick: pend, code: norm(newCode) }); done(pend, newCode); }
-    catch (e) { if (e.message === "taken") { show("st1"); gerr("這個暱稱剛被別人使用，請換一個。"); } else gerr("建立失敗，請稍後再試。"); }
+    catch (e) { if (e.message === "taken") { show("st1"); gerr("這個暱稱剛被別人使用，請換一個。"); } else { console.error(e); gerr(netErr(e)); } }
   };
   $("unlock").onclick = async function () {
     gerr("驗證中…");
     try { await api("login", { nick: pend, code: norm(codeIn.value) }); done(pend, codeIn.value); }
-    catch (e) { gerr(e.message === "auth" ? "安全碼不正確。" : "連線失敗，請稍後再試。"); }
+    catch (e) { if (e.message === "auth") gerr("安全碼不正確。"); else { console.error(e); gerr(netErr(e)); } }
   };
   $("cpcode").onclick = function () { try { navigator.clipboard.writeText(newCode).then(function () { gerr("已複製。"); }, function () { gerr("請手動抄下安全碼。"); }); } catch (e) { gerr("請手動抄下安全碼。"); } };
   $("back1").onclick = $("back2").onclick = function () { show("st1"); };
@@ -180,7 +202,7 @@ dl.save({filename:n+".png",data:b}).then(function(){msg.textContent="已儲存�
 },"image/png");
 };
 var GK=[["fam","同家族"],["world","同世界"],["fac","同陣營"],["by","同創作者"]],GL={fam:"家族",world:"世界",fac:"陣營",by:"創作者"};
-var grp="fam",pubDocs=[],priv=[],editId=null,pubState="wait";
+var grp="fam",pubDocs=[],priv=[],editId=null,pubState="wait",libErr="";
 function newId(){return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function say(t){msg.textContent=t}
@@ -219,7 +241,7 @@ s.appendChild(cs);gg.appendChild(s);
 GK.forEach(function(x){var b=mk("button",null,x[1]);b.type="button";b.setAttribute("role","tab");b.onclick=function(){grp=x[0];renderG()};gt.appendChild(b)});
 async function loadPub(){try{pubDocs=(await api("listPublic")).items||[];pubState="ok"}catch(e){pubState="none"}renderG()}
 async function loadPriv(){
-if(auth){try{priv=(await api("listPrivate",auth)).items||[]}catch(e){if(e.message==="auth"){logout();return}say("無法載入私人角色庫。")}}
+if(auth){try{priv=(await api("listPrivate",auth)).items||[];libErr=""}catch(e){console.warn("listPrivate failed:",e);libErr=e.message==="auth"?"私人角色庫驗證失敗（後端回傳 auth）。請按「登出／更換暱稱」重新登入，不會再自動跳回登入頁。":"無法載入私人角色庫："+e.message}}
 renderLib();
 }
 function refresh(){return Promise.all([loadPub(),loadPriv()])}
@@ -234,6 +256,7 @@ say("正在編輯「"+c.n+"」，儲存後會覆蓋原角色。");jump("sheet");
 function renderLib(){
 var box=document.getElementById("lib");box.innerHTML="";
 if(!auth){box.appendChild(mk("p","sub","登入創作者暱稱與安全碼後，才看得到私人角色庫。"));var lb=mk("button","cta","登入");lb.type="button";lb.style.cssText="border:0;cursor:pointer;font:inherit";lb.onclick=logout;box.appendChild(lb);return}
+if(libErr){box.appendChild(mk("p","sub",libErr));return}
 var all=priv.slice().sort(function(a,b){return (b.at||0)-(a.at||0)});
 if(!all.length){box.appendChild(mk("p","sub","私人角色庫是空的。填寫角色卡並且不勾選櫥窗選項，角色就會存放在這裡。"));return}
 var cs=mk("div","gcards");
