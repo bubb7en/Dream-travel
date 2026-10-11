@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/library/d/1qWo7rRyCsr71ZgpmaIZafU-Im70NPcNAltXFhgX0490IbQLnfM89enzA/2";
+const API_URL = "https://script.google.com/macros/s/AKfycbzdry7EEPkam7b3ErUXTEC7IQWq7r886KOgaZa6uHnLRA8PXm8uuuLGviJFizj94x6SmA/exec";
 
 async function api(action, data) {
   const r = await fetch(API_URL, {
@@ -25,6 +25,7 @@ function initLogin() {
   function done(nick, code) { sessionStorage.setItem("tide-auth", JSON.stringify({ nick: nick, code: norm(code) })); location.href = "main.html"; }
   $("next").onclick = async function () {
     var v = nickIn.value.trim().slice(0, 20); if (!v) { nickIn.focus(); return; }
+    if (API_URL.indexOf("PASTE_YOUR") === 0) { gerr("尚未設定 API_URL：請把 Apps Script 的 /exec 網址貼到 main.js 開頭。"); return; }
     gerr("連線中…");
     try {
       var j = await api("checkNick", { nick: v });
@@ -45,7 +46,7 @@ function initLogin() {
   };
   $("cpcode").onclick = function () { try { navigator.clipboard.writeText(newCode).then(function () { gerr("已複製。"); }, function () { gerr("請手動抄下安全碼。"); }); } catch (e) { gerr("請手動抄下安全碼。"); } };
   $("back1").onclick = $("back2").onclick = function () { show("st1"); };
-  $("skip").onclick = function () { sessionStorage.setItem("tide-guest", "1"); location.href = "main.html"; };
+  $("skip").onclick = function () { sessionStorage.setItem("tide-guest", "1"); };
   nickIn.addEventListener("keydown", function (e) { if (e.key === "Enter") $("next").click(); });
   codeIn.addEventListener("keydown", function (e) { if (e.key === "Enter") $("unlock").click(); });
   nickIn.focus();
@@ -257,6 +258,9 @@ r.setAttribute("data-theme",dark?"light":"dark");
 
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (document.body.dataset.page === "login") initLogin(); else initMain();
-});
+function boot() {
+  // 以頁面上有沒有「繼續」按鈕判斷是登入頁，不再依賴 <body data-page>
+  if (document.getElementById("next")) initLogin(); else initMain();
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+else boot();
