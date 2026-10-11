@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>潮汐群島｜跑團世界觀導覽</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="main">
+<div id="tide" aria-hidden="true"></div>
+<button id="theme" type="button">切換明暗</button>
 
+<header>
+<div class="wrap">
+<h1>潮汐群島</h1>
+<div class="lead">
+<p class="big">海水每天升降兩次。退潮的時候，被淹沒的舊世界會露出屋頂、街道與還在運轉的機械。</p>
+<p>你們是「拾潮人」：在潮水回來之前，進去撿東西，然後活著出來。</p>
+<p class="tag">給第一次跑團的你：讀完這頁約 10 分鐘，不需要任何前置知識。</p>
+<a class="cta" href="#sheet">直接填寫角色卡</a>
+</div>
+</div>
+</header>
+
+<nav aria-label="章節"><div class="wrap">
+<a href="#quick">一分鐘看懂</a><a href="#history">歷史</a><a href="#factions">勢力</a><a href="#places">地點</a><a href="#roles">角色</a><a href="#newbie">新手指南</a><a href="#sheet">填寫角色卡</a><a href="#library">我的角色庫</a><a href="#gallery">角色櫥窗</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="quick">
+<h2>一分鐘看懂</h2>
+<p class="sub">只要記住這三件事，就能開始。</p>
+<div class="facts">
+<div><b>世界是海。</b>陸地只剩大大小小的島，島與島之間靠帆船和潮道往來。</div>
+<div><b>潮水是倒數計時器。</b>每次探索都有「潮位」時鐘，漲到頂，就必須離開。</div>
+<div><b>舊世界值錢也危險。</b>裡面有能用的遺物，也有沒被關掉的守衛與詛咒。</div>
+</div>
+</section>
+
+<section id="history">
+<h2>世界簡史</h2>
+<p class="sub">依時間順序，從過去讀到現在。</p>
+<ol class="time">
+<li><b>大陸時代</b>：人類建起高塔與長橋，用「潮能」驅動城市。</li>
+<li><b>滿潮之夜</b>：海面在一夜之間上升數百公尺，沒人確定原因。</li>
+<li><b>漂流百年</b>：倖存者在山頂與船上重建生活，形成今天的群島。</li>
+<li><b>燈塔條約</b>：各島簽約，共同維護潮汐表與航道，戰爭暫時停止。</li>
+<li><b>現在</b>：潮汐表開始出錯。有些地方該退潮時卻沒有退。</li>
+</ol>
+</section>
+
+<section id="factions">
+<h2>四大勢力</h2>
+<p class="sub">點選名稱，看看他們想要什麼。</p>
+<div class="tabs" role="tablist" id="ftabs"></div>
+<div class="card" id="fcard" role="tabpanel" aria-live="polite"></div>
+</section>
+
+<section id="places">
+<h2>主要地點</h2>
+<p class="sub">故事大多從這三座島開始。</p>
+<div class="map">
+<svg viewBox="0 0 400 200" role="img" aria-label="群島示意圖：北方燈塔島、東南鹽港、西南沉鐘灣">
+<rect width="400" height="200" fill="none"/>
+<path d="M0 60 Q50 45 100 60 T200 60 T300 60 T400 60" fill="none" stroke="var(--sea)" stroke-opacity=".35" stroke-width="2"/>
+<path d="M0 150 Q50 135 100 150 T200 150 T300 150 T400 150" fill="none" stroke="var(--sea)" stroke-opacity=".35" stroke-width="2"/>
+<ellipse cx="200" cy="40" rx="42" ry="20" fill="var(--brass)" fill-opacity=".35"/><text x="200" y="45" text-anchor="middle">燈塔島</text>
+<ellipse cx="310" cy="130" rx="50" ry="26" fill="var(--sea)" fill-opacity=".35"/><text x="310" y="135" text-anchor="middle">鹽港</text>
+<ellipse cx="90" cy="135" rx="46" ry="24" fill="var(--sea)" fill-opacity=".2" stroke="var(--sea)" stroke-dasharray="4 4"/><text x="90" y="140" text-anchor="middle">沉鐘灣</text>
+</svg>
+</div>
+<details><summary>燈塔島：議會所在地</summary><p>整座島圍著一座會發光的塔建成。這裡發布每日潮汐表，也是任務的接案處。治安好、規矩多，帶武器進城要登記。</p></details>
+<details><summary>鹽港：最熱鬧的市集</summary><p>船隻、商人、走私客都在這裡。想買裝備、找情報、認識同伴，先來這裡。夜裡的碼頭不要單獨行動。</p></details>
+<details><summary>沉鐘灣：退潮才出現的舊城</summary><p>舊世界的城區，只在大退潮時露出水面。街上還有鐘聲，但沒人知道是誰在敲。多數冒險從這裡開始。</p></details>
+</section>
+
+<section id="roles">
+<h2>你可以扮演誰</h2>
+<p class="sub">選一個最想演的，細節可以之後再補。</p>
+<details><summary>拾潮人（探索者）</summary><p>擅長潛入舊城、開鎖、辨認遺物。隊伍裡最常見的角色。</p></details>
+<details><summary>領航員</summary><p>看得懂潮汐表，也懂星象。負責讓隊伍在對的時間進、對的時間出。</p></details>
+<details><summary>機修師</summary><p>能修復舊世界的機械，也能在戰鬥中操作重型裝置。</p></details>
+<details><summary>鹽祭司</summary><p>與深潮溝通的人。能安撫海中的東西，但代價由你自己承擔。</p></details>
+<details><summary>放逐衛兵</summary><p>曾經的議會守衛，因為某件事被除名。擅長保護同伴。</p></details>
+</section>
+
+<section id="newbie">
+<h2>新手指南</h2>
+<p class="sub">不懂術語也沒關係，先看這幾個。</p>
+<details><summary>什麼是跑團？</summary><p>一群人一起說一個故事。一位主持人（GM）描述世界，其他人各自扮演一個角色，說出角色想做什麼。不確定成不成功時，就擲骰子決定。</p></details>
+<details><summary>GM 是誰？</summary><p>遊戲主持人。負責描述場景、扮演路人（NPC）、裁定結果。GM 不是對手，而是幫大家把故事說好的人。</p></details>
+<details><summary>什麼是擲骰與檢定？</summary><p>當你的角色做有風險的事（例如撬開生鏽的門），GM 會請你擲骰。點數加上你的能力，達到目標就成功。失敗通常會讓故事往有趣的方向轉，而不是卡住。</p></details>
+<details><summary>角色卡怎麼填？</summary><p>寫下名字、身分、幾項擅長的事、一個弱點和一個想達成的願望。有這五項就夠開場，其餘可以邊玩邊補。</p></details>
+<details><summary>我不會演戲怎麼辦？</summary><p>不用演。用「我的角色會……」開頭說明想做什麼就好。用第三人稱一樣完全可以。</p></details>
+
+<h3 style="margin:28px 0 10px;font-size:20px">開始前的三個約定</h3>
+<ol class="rules">
+<li><b>先說不想碰的內容。</b>開場前，大家一起列出不想出現的題材，主持人會避開。</li>
+<li><b>隨時可以喊暫停。</b>不舒服、看不懂或需要休息，說一聲就好，不必解釋原因。</li>
+<li><b>問就對了。</b>不確定規則或劇情時，直接問，沒有人會覺得你笨。</li>
+</ol>
+</section>
+
+<section id="sheet">
+<h2>角色卡（白單）</h2>
+<p class="sub">讀完世界觀後，從上往下填。每格下方有提示，內容會自動存在這個瀏覽器，不會上傳。</p>
+<div class="sheet">
+<div class="btns"><span id="whoami"></span><button type="button" id="chg">登出／更換暱稱</button></div>
+<label>角色名字<input data-f="name" placeholder="例：阿潮" autocomplete="off"><small>取一個容易記的就好。</small></label>
+<label>身分<select data-f="role" id="fRole"></select><small>對應上方「你可以扮演誰」。</small></label>
+<label>出身勢力<select data-f="fac" id="fFac"></select><small>你從哪裡來，會影響 NPC 怎麼看你。</small></label>
+<label>家族<input data-f="fam" placeholder="例：海蛇家（沒有就留空）" autocomplete="off"><small>櫥窗會把同家族的角色放在一起。</small></label>
+<label>所屬世界<input data-f="world" value="潮汐群島" autocomplete="off"><small>角色來自哪個世界觀。</small></label>
+<fieldset><legend>能力</legend><small id="left"></small><div id="stats"></div></fieldset>
+<label>擅長的兩件事<input data-f="skills" placeholder="例：在暗處辨方向、和老人聊天" autocomplete="off"><small>越具體越好用。</small></label>
+<label>弱點<input data-f="weak" placeholder="例：怕深水" autocomplete="off"><small>弱點讓故事有戲，GM 會很感謝你。</small></label>
+<label>願望<input data-f="wish" placeholder="例：找到失蹤的姊姊" autocomplete="off"><small>你的角色最想達成什麼？</small></label>
+<label>隨身三件物品<input data-f="items" placeholder="例：舊懷錶、鹽袋、折疊小刀" autocomplete="off"></label>
+<label>背景故事（選填）<textarea data-f="story" placeholder="寫幾句就好：你在哪裡長大？為什麼開始拾潮？"></textarea></label>
+<label class="chk"><input type="checkbox" id="pub">將角色擺放至櫥窗<small>勾選：所有人都能在櫥窗看到這個角色。不勾選：只存進你的私人角色庫，只有你看得到。</small></label>
+<div class="btns"><button type="button" class="go" id="mkimg">產生角色卡圖片</button><button type="button" id="addg">儲存角色</button><button type="button" id="copy">複製文字版</button><button type="button" id="clear">清空重填</button></div>
+<p id="msg" role="status"></p>
+<textarea id="out" readonly hidden aria-label="角色卡文字"></textarea>
+<div id="imgbox" hidden>
+<img id="cardimg" alt="完整的角色卡圖片" style="width:100%;height:auto;border-radius:8px;display:block">
+<div class="btns" style="margin-top:12px"><button type="button" class="go" id="dl" hidden>下載圖片</button></div>
+<small>手機也可以長按圖片，選擇儲存到相簿。</small>
+</div>
+</div>
+</section>
+
+<section id="library">
+<h2>我的私人角色庫</h2>
+<p class="sub">只有輸入正確暱稱與安全碼的本人看得到。可以載入編輯、放到櫥窗，或刪除。</p>
+<div id="lib"></div>
+</section>
+
+<section id="gallery">
+<h2>角色櫥窗</h2>
+<p class="sub">這裡是大家公開的角色。切換分類，同一批角色會依不同方式分組。</p>
+<div class="tabs" role="tablist" id="gtabs"></div>
+<div id="ggrid" aria-live="polite"></div>
+</section>
+
+</main>
+
+<footer><div class="wrap">這是一份可替換的範例世界觀。要換成你自己的設定，只需修改文字內容。</div></footer>
+<script src="main.js"></script>
+</body>
+</html>
