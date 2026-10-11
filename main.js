@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwbn3DEJrDeuuFNtsMz2769GRoWdpICBezZTDCbELe0KdLjQ7I4SW2y35PxT2xOL-x2/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxcXykFA89UkV7PTakDfbWPP_XO0GFDMa96utQB6XwNS4FnnMGjN_24e3ELlPE0a-53/exec";
 
 // 通用 API 發送函式
 async function api(action, data) {
